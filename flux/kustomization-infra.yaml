@@ -1,13 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: pipeline-prod
+  name: pipeline-infra
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: pipeline-infra
-  interval: 5m
-  path: ./overlays/prod
+  interval: 10m
+  path: ./infrastructure
   prune: true
   sourceRef:
     kind: GitRepository
@@ -17,8 +15,12 @@ spec:
     secretRef:
       name: sops-age
   healthChecks:
-    - apiVersion: apps/v1
-      kind: Deployment
-      name: pipeline-api
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: postgresql
       namespace: pipeline
-  timeout: 3m
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: kafka
+      namespace: pipeline
+  timeout: 10m

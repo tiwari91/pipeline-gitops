@@ -23,7 +23,7 @@ patches:
         value: 256Mi
       - op: replace
         path: /spec/template/spec/containers/0/image
-        value: tiwari91/pipeline-api:dev
+        value: shankyt/pipeline-api:dev
 
   - target:
       kind: HorizontalPodAutoscaler
