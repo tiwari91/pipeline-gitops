@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: pipeline-api
+  labels:
+    app: pipeline-api
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: pipeline-api

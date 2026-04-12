@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pipeline-api
+  labels:
+    app: pipeline-api
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`pipeline.arlingtonhood21.work`)
+      kind: Rule
+      services:
+        - name: pipeline-api
+          port: 8080
+  tls:
+    certResolver: letsencrypt

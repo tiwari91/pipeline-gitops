@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pipeline-config
+  labels:
+    app: pipeline-api
+data:
+  SPRING_PROFILES_ACTIVE: k8s
+  DB_HOST: postgresql
+  DB_PORT: "5432"
+  DB_NAME: eventpipeline
+  DB_USERNAME: postgres
+  KAFKA_BOOTSTRAP_SERVERS: kafka:9092

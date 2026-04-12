@@ -1,0 +1,45 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namePrefix: dev-
+namespace: pipeline-dev
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: pipeline-api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/requests/memory
+        value: 128Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/resources/limits/memory
+        value: 256Mi
+      - op: replace
+        path: /spec/template/spec/containers/0/image
+        value: tiwari91/pipeline-api:dev
+
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: pipeline-api
+    patch: |-
+      - op: replace
+        path: /spec/maxReplicas
+        value: 2
+
+  - target:
+      kind: ResourceQuota
+      name: pipeline-quota
+    patch: |-
+      - op: replace
+        path: /spec/hard/requests.memory
+        value: 1Gi
+      - op: replace
+        path: /spec/hard/limits.memory
+        value: 2Gi
