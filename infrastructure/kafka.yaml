@@ -64,13 +64,16 @@ spec:
               value: "1"
             - name: CLUSTER_ID
               value: "pipeline-kafka-cluster-001"
+          env:
+            - name: KAFKA_HEAP_OPTS
+              value: "-Xms256m -Xmx512m"
           resources:
             requests:
-              cpu: 50m
-              memory: 256Mi
-            limits:
-              cpu: 500m
+              cpu: 100m
               memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 768Mi
           volumeMounts:
             - name: data
               mountPath: /tmp/kraft-combined-logs
