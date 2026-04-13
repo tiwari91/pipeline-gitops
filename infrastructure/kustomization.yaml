@@ -4,5 +4,5 @@ kind: Kustomization
 resources:
   - helmrepository-bitnami.yaml
   - helmrelease-postgresql.yaml
-  - helmrelease-kafka.yaml
+  - kafka.yaml
   - postgresql-secret.enc.yaml
